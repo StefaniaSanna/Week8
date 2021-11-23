@@ -18,6 +18,23 @@ namespace Week8.Master.RepositoryMock
         };
         public Studente Add(Studente item)
         {
+            //id autoincrementale
+            if (Studenti.Count == 0)
+            {
+                item.Id = 1;
+            }
+            else
+            {
+                int max = 1;
+                foreach (var i in Studenti)
+                {
+                    if(i.Id > max)
+                    {
+                        max = i.Id;
+                    }
+                }
+                item.Id = max + 1;
+            }
             Studenti.Add(item);
             return item;
         }
@@ -57,5 +74,7 @@ namespace Week8.Master.RepositoryMock
             }
             return null;
         }
+
+        
     }
 }

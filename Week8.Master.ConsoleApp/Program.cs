@@ -10,8 +10,8 @@ namespace Week8.Master.ConsoleApp
     class Program
     {
         //questo è quello che prima era il dbManager
-        private static readonly IBusinessLayer bl = new MainBusinessLayer(new RepositoryCorsiMock(), new RepositoryStudentiMock());
-        //private static readonly IBusinessLayer bl = new MainBusinessLayer(new RepositoryCorsiADO());
+        //private static readonly IBusinessLayer bl = new MainBusinessLayer(new RepositoryCorsiMock(), new RepositoryStudentiMock());
+        private static readonly IBusinessLayer bl = new MainBusinessLayer(new RepositoryCorsiADO(), new RepositoryStudentiADO());
         static void Main(string[] args)
         {
             Console.WriteLine("Benvenuto al Master!");
@@ -126,7 +126,6 @@ namespace Week8.Master.ConsoleApp
             Esito codiceEsito = bl.VerificaCorso(cod);
             if (codiceEsito.IsOk == true)
             {
-                int id = bl.CreateIdStudente();
                 Console.WriteLine("Inserisci il nome e del nuovo studente");
                 string nome = Console.ReadLine();
                 Console.WriteLine("Inserisci il cognome del nuovo studente");
@@ -136,8 +135,15 @@ namespace Week8.Master.ConsoleApp
                 string titolo = Console.ReadLine();
                 Console.WriteLine("Inserisci l'email");
                 string email = Console.ReadLine();
-                Studente nuovoStudente = new Studente(id, nome, cognome, email, titolo, dataNascita, cod);
-                Esito esito = bl.AggiungiStudente(nuovoStudente);
+                //creo qua lo studente
+                Studente studente = new Studente();
+                studente.Nome = nome;
+                studente.Cognome = cognome;
+                studente.DataNascita = dataNascita;
+                studente.TitoloStudio = titolo;
+                studente.Email = email;
+                studente.CorsoCodice = cod;
+                Esito esito = bl.AggiungiStudente(studente);
                 Console.WriteLine(esito.Messaggio);
             }
             else

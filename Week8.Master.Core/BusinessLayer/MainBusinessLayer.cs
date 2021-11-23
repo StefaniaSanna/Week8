@@ -95,25 +95,9 @@ namespace Week8.Master.Core.BusinessLayer
             return studentiRepo.GetAll();
         }
 
-        public int CreateIdStudente()
-        {
-            List<Studente> studentiPerId = GetAllStudenti();
-            //trovo id più alto
-            int id = 0;
-            foreach (var item in studentiPerId)
-            {
-                if(item.Id > id)
-                {
-                    id = item.Id;
-                }
-            }
-            int nuovoid = ++id;
-            return nuovoid;
-        }
-
-        public Esito AggiungiStudente(Studente nuovoStudente)
-        {
-            studentiRepo.Add(nuovoStudente);
+        public Esito AggiungiStudente(Studente studente)
+        {          
+            studentiRepo.Add(studente);
             return new Esito { Messaggio = "Studente aggiunto correttamente", IsOk = true };
         }
       
@@ -167,7 +151,6 @@ namespace Week8.Master.Core.BusinessLayer
             }
             return null;
         }
-
 
 
         #endregion Funzionalita Studenti
