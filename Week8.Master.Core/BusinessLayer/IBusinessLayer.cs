@@ -16,5 +16,13 @@ namespace Week8.Master.Core.BusinessLayer
         public Esito AggiungiCorso(Corso c);
         public Esito ModificaCorso(string codice, string nuovoNome, string nuovaDescrizione); //implementato dal program
         public Esito EliminaCorso(string codice);
+        public List<Studente> GetAllStudenti();
+        public int CreateIdStudente();
+        public Esito AggiungiStudente(Studente nuovoStudente);
+        public Esito VerificaCorso(string codice);
+        public Studente GetStudenteById(int id);
+        public Esito ModificaStudente(Studente studenteDaModificare, string nuovaEmail);
+        public Esito EliminaStudente(int id);
+        public List<Studente> GestStudentsByCourse(string codice);
     }
 }

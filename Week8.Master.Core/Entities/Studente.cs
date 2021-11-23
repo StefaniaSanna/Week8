@@ -20,6 +20,18 @@ namespace Week8.Master.Core.Entities
         {
             return $"ID: {Id}\t{Nome}\t{Cognome}\t nato il: {DataNascita.ToShortDateString()}\t Altre info: {Email} - {TitoloStudio} ";
         }
+
+        public Studente()
+        {
+
+        }
+        public Studente(int id, string nome, string cognome, string email, string titoloStudio, DateTime dataNascita, string corsoCodice): base(id, nome, cognome, email)
+        {
+            TitoloStudio = titoloStudio;
+            DataNascita = dataNascita;
+            CorsoCodice = corsoCodice;
+
+        }
     }
 
 }

@@ -12,5 +12,18 @@ namespace Week8.Master.Core.Entities
         public string Nome { get; set; }
         public string Cognome { get; set; }
         public string Email { get; set; }
+
+        public Persona()
+        {
+
+        }
+        public Persona(int id, string nome, string cognome, string email)
+        {
+            Id = id;
+            Nome = nome;
+            Cognome = cognome;
+            Email = email;
+
+        }
     }
 }

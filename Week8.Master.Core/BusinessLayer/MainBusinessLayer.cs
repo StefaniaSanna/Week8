@@ -20,6 +20,7 @@ namespace Week8.Master.Core.BusinessLayer
             corsiRepo = corsi;
             studentiRepo = studenti;
         }
+
         #region Funzionalita corsi
         public Esito AggiungiCorso(Corso c)
         {
@@ -75,9 +76,97 @@ namespace Week8.Master.Core.BusinessLayer
             return new Esito { Messaggio = "Corso aggiornato", IsOk = true };
         }
 
+        public Esito VerificaCorso(string codice)
+        {
+            Corso corsoEsistente = corsiRepo.GetByCode(codice);
+
+            if (corsoEsistente == null)
+            {
+                return new Esito { Messaggio = "Corso inesistente", IsOk = false };
+            }
+            return new Esito { Messaggio = "Corso esistente", IsOk = true };
+        }
+
         #endregion Funzionalita corsi
 
         #region Funzionalita Studenti
+        public List<Studente> GetAllStudenti()
+        {
+            return studentiRepo.GetAll();
+        }
+
+        public int CreateIdStudente()
+        {
+            List<Studente> studentiPerId = GetAllStudenti();
+            //trovo id più alto
+            int id = 0;
+            foreach (var item in studentiPerId)
+            {
+                if(item.Id > id)
+                {
+                    id = item.Id;
+                }
+            }
+            int nuovoid = ++id;
+            return nuovoid;
+        }
+
+        public Esito AggiungiStudente(Studente nuovoStudente)
+        {
+            studentiRepo.Add(nuovoStudente);
+            return new Esito { Messaggio = "Studente aggiunto correttamente", IsOk = true };
+        }
+      
+        public Studente GetStudenteById(int id)
+        {
+            Studente studenteEsistente = studentiRepo.GetById(id);
+            if (studenteEsistente != null)
+            {
+                return studenteEsistente;
+            }
+            return null;
+        }
+
+        public Esito ModificaStudente(Studente studenteDaModificare, string nuovaEmail)
+        {
+            studenteDaModificare.Email = nuovaEmail;
+            studentiRepo.Update(studenteDaModificare);
+            return new Esito { Messaggio = "Studente aggiornato", IsOk = true };
+        }
+
+        public Esito EliminaStudente(int id)
+        {
+            Studente studenteDaEliminare = studentiRepo.GetById(id);
+            if(studentiRepo == null)
+            {
+                return new Esito { Messaggio = "Nessuno studente corrispondere al codice inserito", IsOk = false };
+            }
+            studentiRepo.Delete(studenteDaEliminare);
+            return new Esito { Messaggio = "Studente eliminato correttamente", IsOk = true };
+        }
+
+        public List<Studente> GestStudentsByCourse(string codice)
+        {
+            Esito esitoCorso = VerificaCorso(codice);
+            if (esitoCorso.IsOk == true)
+            {
+                List<Studente> tuttiStudenti = GetAllStudenti();
+                List<Studente> StudentiFiltrati = new List<Studente>();
+                foreach (var item in tuttiStudenti)
+                {
+                    if (item.CorsoCodice == codice)
+                    {
+                        StudentiFiltrati.Add(item);
+                    }
+                }
+                return StudentiFiltrati;
+            }
+            else
+            {
+                Console.WriteLine(esitoCorso.Messaggio);
+            }
+            return null;
+        }
 
 
 

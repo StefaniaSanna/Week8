@@ -11,30 +11,51 @@ namespace Week8.Master.RepositoryMock
     public class RepositoryStudentiMock : IRepositoryStudenti
     {
 
-        public static List<Studente> Studenti = new List<Studente>();
+        public static List<Studente> Studenti = new List<Studente>()
+        {
+            new Studente(1, "Mario", "Rossi","marioRossi@gmail.com","Laurea magistrale in Economia",new DateTime(2021,12,10), "C-01")
+
+        };
         public Studente Add(Studente item)
         {
-            throw new NotImplementedException();
+            Studenti.Add(item);
+            return item;
         }
 
         public bool Delete(Studente item)
         {
-            throw new NotImplementedException();
+            Studenti.Remove(item);
+            return true;
         }
 
         public List<Studente> GetAll()
         {
-            throw new NotImplementedException();
+            return Studenti;
         }
 
         public Studente GetById(int id)
         {
-            throw new NotImplementedException();
+            foreach (var item in Studenti)
+            {
+                if(item.Id == id)
+                {
+                    return item;
+                }
+            }
+            return null;
         }
 
         public Studente Update(Studente item)
         {
-            throw new NotImplementedException();
+            foreach (var e in Studenti)
+            {
+                if(item.Id == e.Id)
+                {
+                    e.Email = item.Email;
+                    return e;
+                }
+            }
+            return null;
         }
     }
 }
