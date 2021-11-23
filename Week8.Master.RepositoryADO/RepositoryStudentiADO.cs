@@ -103,7 +103,8 @@ namespace Week8.Master.RepositoryADO
                 SqlCommand command = new SqlCommand();
                 command.Connection = connection;
                 command.CommandType = CommandType.Text;
-                command.CommandText = "select * from Studente";
+                command.CommandText = "select * from Studente where ID=@id";
+                command.Parameters.AddWithValue("@id", id);
                 SqlDataReader reader = command.ExecuteReader();
                 Studente nuovoStudente = new Studente();
 
@@ -117,21 +118,20 @@ namespace Week8.Master.RepositoryADO
                     var dataNascita = reader["DataNascita"];
                     var corsoCodice = reader["CorsoCodice"];
 
-                    if ((int)Id == id)
-                    {
-                        nuovoStudente.Id = (int)Id;
-                        nuovoStudente.Nome = (string)nome;
-                        nuovoStudente.Cognome = (string)cognome;
-                        nuovoStudente.Email = (string)email;
-                        nuovoStudente.TitoloStudio = (string)titolo;
-                        nuovoStudente.DataNascita = (DateTime)dataNascita;
-                        nuovoStudente.CorsoCodice = (string)corsoCodice;
-                        connection.Close();
-                        return nuovoStudente;
-                    }
+                    nuovoStudente.Id = (int)Id;
+                    nuovoStudente.Nome = (string)nome;
+                    nuovoStudente.Cognome = (string)cognome;
+                    nuovoStudente.Email = (string)email;
+                    nuovoStudente.TitoloStudio = (string)titolo;
+                    nuovoStudente.DataNascita = (DateTime)dataNascita;
+                    nuovoStudente.CorsoCodice = (string)corsoCodice;                   
                 }
-                connection.Close();
-                return null;
+                if(nuovoStudente.Id != 0)
+                {
+                    connection.Close();
+                    return nuovoStudente;
+                }
+                return null;             
             }
         }
 
