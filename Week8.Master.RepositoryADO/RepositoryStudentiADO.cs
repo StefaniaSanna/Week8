@@ -45,7 +45,24 @@ namespace Week8.Master.RepositoryADO
 
         public bool Delete(Studente item)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandType = CommandType.Text;
+                command.CommandText = "delete Studente where ID=@c";
+                command.Parameters.AddWithValue("@c", item.Id);
+
+                int numRighe = command.ExecuteNonQuery();
+                if (numRighe == 1)
+                {
+                    connection.Close();
+                    return true;
+                }
+                connection.Close();
+                return false;
+            }
         }
 
         public List<Studente> GetAll()

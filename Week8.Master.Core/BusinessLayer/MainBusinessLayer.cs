@@ -100,24 +100,6 @@ namespace Week8.Master.Core.BusinessLayer
             studentiRepo.Add(studente);
             return new Esito { Messaggio = "Studente aggiunto correttamente", IsOk = true };
         }
-      
-        public Studente GetStudenteById(int id)
-        {
-            Studente studenteEsistente = studentiRepo.GetById(id);
-            if (studenteEsistente != null)
-            {
-                return studenteEsistente;
-            }
-            return null;
-        }
-
-        public Esito ModificaStudente(Studente studenteDaModificare, string nuovaEmail)
-        {
-            studenteDaModificare.Email = nuovaEmail;
-            studentiRepo.Update(studenteDaModificare);
-            return new Esito { Messaggio = "Studente aggiornato", IsOk = true };
-        }
-
         public Esito EliminaStudente(int id)
         {
             Studente studenteDaEliminare = studentiRepo.GetById(id);
@@ -148,6 +130,23 @@ namespace Week8.Master.Core.BusinessLayer
             else
             {
                 Console.WriteLine(esitoCorso.Messaggio);
+            }
+            return null;
+        }
+
+        public Esito ModificaStudente(Studente studenteDaModificare, string nuovaEmail)
+        {
+            studenteDaModificare.Email = nuovaEmail;
+            studentiRepo.Update(studenteDaModificare);
+            return new Esito { Messaggio = "Studente aggiornato", IsOk = true };
+        }
+
+        public Studente GetStudenteById(int id)
+        {
+            Studente studenteEsistente = studentiRepo.GetById(id);
+            if (studenteEsistente != null)
+            {
+                return studenteEsistente;
             }
             return null;
         }
